@@ -1,8 +1,35 @@
 package com.example.whiteboard.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "courses")
 public class Course {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String title;
+
+  @OneToMany(mappedBy = "course")
+  private List<Module> modules = new ArrayList<>();
+
+
+
+  public List<Module> getModules() {
+    return modules;
+  }
+
+  public void setModules(List<Module> modules) {
+    this.modules = modules;
+  }
+
 
   public Integer getId() {
     return id;
@@ -21,8 +48,14 @@ public class Course {
   }
 
   public Course(){}
-  public Course(Integer id, String title) {
-    this.id = id;
-    this.title = title;
+
+  public void set(Course newCourse){
+    this.id = newCourse.id;
+    this.title = newCourse.title;
+
   }
+//  public Course(Integer id, String title, List<Module> modules) {
+//    this.id = id;
+//    this.title = title;
+//  }
 }
